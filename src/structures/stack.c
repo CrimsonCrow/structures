@@ -33,7 +33,10 @@ void* stack_pop(stack_t* stack) {
     /* any number except zero returns true,
      * so if length is greater than zero pop else return NULL*/
     if(stack->length) {
-        return stack->buffer[--stack->length];
+        size_t current = --stack->length;
+        void* data = stack->buffer[current];
+        stack->buffer[current] = NULL;
+        return data;
     } else {
         fprintf(stderr, "there is nothing to pop!\n");
         return NULL;
