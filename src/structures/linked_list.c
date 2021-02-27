@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-node_t* node_create(void* data) {
-    node_t* new_node = malloc(sizeof(node_t));
+linked_node_t* linked_node_create(void* data) {
+    linked_node_t* new_node = malloc(sizeof(linked_node_t));
     if(new_node == NULL) {
         return NULL;
     }
@@ -27,8 +27,8 @@ linked_list_t* list_create() {
 }
 
 void list_destroy(linked_list_t* list) {
-    node_t* current = list->head;
-    node_t* next = NULL;
+    linked_node_t* current = list->head;
+    linked_node_t* next = NULL;
     while(current != NULL) {
         next = current->next;
         free(current);
@@ -39,19 +39,19 @@ void list_destroy(linked_list_t* list) {
 
 void list_add(linked_list_t* list, void* data) {
     if(list->head == NULL) {
-        list->head = node_create(data);
+        list->head = linked_node_create(data);
     } else {
-        node_t* current = list->head;
+        linked_node_t* current = list->head;
         while(current->next != NULL) {
             current = current->next;
         }
-        current->next = node_create(data);
+        current->next = linked_node_create(data);
     }
     list->length += 1;
 }
 
 void list_insert(linked_list_t* list, void* data) {
-    node_t* insert = node_create(data);
+    linked_node_t* insert = linked_node_create(data);
     insert->next = list->head->next;
     list->head->next = insert;
     list->length += 1;
@@ -61,8 +61,8 @@ void list_delete(linked_list_t* list, void* data) {
     if(list->head == NULL) {
         printf("list is NULL\n");
     } else {
-        node_t* current = list->head;
-        node_t* prev = current;
+        linked_node_t* current = list->head;
+        linked_node_t* prev = current;
         while(current != NULL) {
             if(current->data == data) {
                 prev->next = current->next;
@@ -79,11 +79,11 @@ void list_delete(linked_list_t* list, void* data) {
     }
 }
 
-node_t* list_search(linked_list_t* list, void* data) {
+linked_node_t* list_search(linked_list_t* list, void* data) {
     if(list->head == NULL) {
         printf("list is empty\n");
     } else {
-        node_t* tmp = list->head;
+        linked_node_t* tmp = list->head;
         while(tmp != NULL) {
             if(tmp->data == data) {
                 return tmp;
