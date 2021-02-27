@@ -1,20 +1,30 @@
 #include <stdio.h>
+#include <stdint.h>
+
+#include "structures/stack.h"
 #include "structures/linked_list.h"
 
 int main(void) {
-    linked_list_t* llist = list_create();
-    printf("adding data to list\n");
-    for(size_t i = 0; i < 10; ++i) {
-        list_add(llist, (void*)i);
+    stack_t* stack = stack_init(10);
+
+    printf("pushing to the stack\n");
+    for(size_t i = 0; i < stack->buffer_size; ++i) {
+        stack_push(stack, (void*)('a' + i));
     }
 
-    printf("%zu\n", llist->length);
+    printf("stack size: %zu\n", stack->length);
 
-    list_insert(llist, (void*)13);
+    printf("popping\n");
+    for(size_t i = 0; i < stack->buffer_size; ++i) {
+        size_t tmp =  (size_t)stack_pop(stack);
+        printf("popping %c\n", (char)tmp);
+    }
 
-    printf("%zu\n", llist->length);
+    printf("stack size: %zu\n", stack->length);
 
-    list_destroy(llist);
+    stack_pop(stack);
+
+    stack_destroy(stack);
 
     return 0;
 }
