@@ -3,17 +3,17 @@
 
 #include <stddef.h>
 
-typedef struct node {
+typedef struct linked_node {
     void* data;
-    struct node* next;
-} node_t;
+    struct linked_node* next;
+} linked_node_t;
 
 typedef struct linked_list {
-    node_t* head;
+    linked_node_t* head;
     size_t length;
 } linked_list_t;
 
-node_t* node_create(void* data);
+linked_node_t* linked_node_create(void* data);
 
 linked_list_t* list_create();
 void list_destroy(linked_list_t* list);
@@ -22,6 +22,6 @@ void list_add(linked_list_t* list, void* data);
 void list_delete(linked_list_t* list, void* data);
 void list_insert(linked_list_t* list, void* data);
 
-node_t* list_search(linked_list_t* list, void* data);
+linked_node_t* list_search(linked_list_t* list, void* data);
 
 #endif // STRUCTURES_LINKED_LIST_H

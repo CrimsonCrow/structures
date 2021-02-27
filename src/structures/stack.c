@@ -35,6 +35,7 @@ void* stack_pop(stack_t* stack) {
     if(stack->length) {
         return stack->buffer[--stack->length];
     } else {
+        fprintf(stderr, "there is nothing to pop!\n");
         return NULL;
     }
 }
