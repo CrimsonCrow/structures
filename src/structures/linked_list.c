@@ -94,3 +94,59 @@ linked_node_t* list_search(linked_list_t* list, void* data) {
 
     return NULL;
 }
+
+/**
+ * Doubly linked list functions
+ */
+
+doubly_linked_node_t* doubly_linked_node_create(void* data) {
+    doubly_linked_node_t* new_node = malloc(sizeof(linked_node_t));
+    if(new_node == NULL) {
+        return NULL;
+    }
+
+    new_node->data = data;
+    new_node->next = NULL;
+    new_node->prev = NULL;
+
+    return new_node;
+}
+
+doubly_linked_list_t* doubly_list_create() {
+    doubly_linked_list_t* list = malloc(sizeof(linked_list_t));
+    if(list == NULL) {
+        return NULL;
+    }
+    list->head = NULL;
+    list->length = 0;
+
+    return list;
+}
+
+/**
+ * There is no need to check for the previous node.
+ * */
+void doubly_list_destroy(doubly_linked_list_t* doubly_list) {
+    doubly_linked_node_t* current = doubly_list->head;
+    doubly_linked_node_t* next = NULL;
+    while(current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    free(doubly_list);
+}
+
+void doubly_list_add(doubly_linked_list_t* list, void* data) {
+    if(list->head == NULL) {
+         list->head = doubly_linked_node_create(data);
+    } else {
+        doubly_linked_node_t* current = list->head;
+        while(current->next != NULL) {
+            current = current->next;
+        }
+        current->next = doubly_linked_node_create(data);
+        current->next->prev = current;
+    }
+    list->length += 1;
+}
